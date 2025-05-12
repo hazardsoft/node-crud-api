@@ -26,8 +26,8 @@
     // "moduleDetection": "auto",                        /* Control what method is used to detect module-format JS files. */
 
     /* Modules */
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
     "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"]

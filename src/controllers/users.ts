@@ -1,8 +1,8 @@
-import {isUser, isUserId} from "../validate.js";
 import type http from "node:http";
-import {getReqBody, getUserIdFromUrl} from "../utils.js";
-import type {User} from "../types.js";
-import {db} from "../db.js";
+import {isUser, isUserId} from "../validate";
+import {getReqBody, getUserIdFromUrl} from "../utils";
+import type {User} from "../types";
+import {db} from "../db";
 
 const sendError = (status: number, message: string, res: http.ServerResponse) => {
     res.writeHead(status);
@@ -87,7 +87,7 @@ export const handleUsers = async (path: string, req: http.IncomingMessage, res: 
             break;
         }
         default:
-            res.writeHead(200);
+            res.writeHead(405);
             res.end(JSON.stringify({
                 message: `unsupported method ${req.method}`
             }));

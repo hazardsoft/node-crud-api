@@ -1,4 +1,4 @@
-import type {User, UserId} from "./types.js";
+import type {User, UserId} from "./types";
 import {validate} from "uuid"
 
 export const isUser = (body: User): body is User => {

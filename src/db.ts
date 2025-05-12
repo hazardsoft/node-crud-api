@@ -1,4 +1,4 @@
-import type {User, UserId, UserWithId} from "./types.js";
+import type {User, UserId, UserWithId} from "./types";
 import {v4} from 'uuid';
 
 export class Database {

@@ -1,5 +1,5 @@
 import type http from "node:http";
-import type {UserId} from "./types.js";
+import type {UserId} from "./types";
 
 export const getReqBody = async <T>(req: http.IncomingMessage): Promise<T> => {
   return new Promise((resolve, reject) => {

@@ -1,6 +1,6 @@
 import http from "node:http";
 import url from "node:url";
-import {handleUsers} from "./controllers/users.js";
+import {handleUsers} from "./controllers/users";
 
 const port = process.env.PORT || 4000;
 
@@ -31,3 +31,5 @@ const server = http.createServer(async (req, res) => {
 server.listen(port, () => {
   console.log(`server is running at port ${port}`)
 });
+
+export { server };
