@@ -9,11 +9,19 @@ const server = http.createServer(async (req, res) => {
 
   console.log(`received request: ${req.method} ${path}`)
 
-  res.writeHead(200);
-  res.end(JSON.stringify({
-    status: 200,
-    message: 'Ok'
-  }));
+  if (path?.startsWith("/api/users")) {
+    res.writeHead(200);
+    res.end(JSON.stringify({
+      status: 200,
+      message: 'Ok'
+    }));
+  } else {
+    res.writeHead(404);
+    res.end(JSON.stringify({
+      status: 404,
+      message: `endpoint ${path} is not found`
+    }));
+  }
 })
 
 server.listen(port, () => {
