@@ -14,7 +14,7 @@ const sendInvalidUserBody = (res: http.ServerResponse) => {
 };
 
 const sendUserNotFound = (userId: string, res: http.ServerResponse) => {
-    sendError(404, `user ${userId} not found`, res);
+    sendError(404, `user not found: ${userId}`, res);
 };
 
 const getValidUserId = (path: string, res: http.ServerResponse): string | null => {

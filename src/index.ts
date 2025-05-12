@@ -23,7 +23,7 @@ const server = http.createServer(async (req, res) => {
   } else {
     res.writeHead(404);
     res.end(JSON.stringify({
-      message: `endpoint ${path} is not found`
+      message: `endpoint is not found: ${path} `
     }));
   }
 })
