@@ -1,6 +1,6 @@
 import {isUser, isUserId} from "../validate.js";
 import type http from "node:http";
-import {getReqBody} from "../utils.js";
+import {getReqBody, getUserIdFromUrl} from "../utils.js";
 import type {User} from "../types.js";
 import {db} from "../db.js";
 
@@ -12,7 +12,7 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
             res.writeHead(200);
             res.end(JSON.stringify(allUsers));
           } else {
-            const userId = getUserId(path);
+            const userId = getUserIdFromUrl(path);
             if (!isUserId(userId)) {
               res.writeHead(400);
               res.end(JSON.stringify({
@@ -47,7 +47,7 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
           break;
         }
         case "PUT": {
-          const userId = getUserId(path);
+          const userId = getUserIdFromUrl(path);
           if (!isUserId(userId)) {
             res.writeHead(400);
             res.end(JSON.stringify({
@@ -76,7 +76,7 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
         }
         break;
         case "DELETE": {
-          const userId = getUserId(path);
+          const userId = getUserIdFromUrl(path);
           if (!isUserId(userId)) {
             res.writeHead(400);
             res.end(JSON.stringify({
@@ -102,8 +102,4 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
             message: `unsupported method ${req.method}`
           }));
       }
-}
-
-const getUserId = (path:string) => {
-  return path.split('users')[1].replace("/", "");
 }
