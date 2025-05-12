@@ -1,4 +1,5 @@
-import {UserId, UserWithId} from "./types.js";
+import type {User, UserId, UserWithId} from "./types.js";
+import {v4} from 'uuid';
 
 export class Database {
     private users: UserWithId[] = [];
@@ -9,6 +10,12 @@ export class Database {
 
     public getUserById(id:UserId):UserWithId | undefined {
         return this.users.find(user => user.id === id)
+    }
+
+    public createUser(body:User):UserWithId {
+        const createdUser = {id: v4(), ...body};
+        this.users.push(createdUser);
+        return createdUser;
     }
 }
 
