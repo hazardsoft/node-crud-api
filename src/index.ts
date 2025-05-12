@@ -1,7 +1,7 @@
 import http from "node:http";
 import url from "node:url";
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const server = http.createServer(async (req, res) => {
   const parsedUrl = url.parse(req.url ?? "", false);
