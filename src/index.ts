@@ -10,6 +10,7 @@ const server = http.createServer(async (req, res) => {
 
   console.log(`received request: ${req.method} ${path}`)
 
+  res.setHeader('Content-Type', 'application/json');
   if (path.startsWith("/api/users")) {
     try {
       await handleUsers(path, req, res);
