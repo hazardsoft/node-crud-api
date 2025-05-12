@@ -17,6 +17,15 @@ export class Database {
         this.users.push(createdUser);
         return createdUser;
     }
+
+    updateUser(userId: UserId,body: User): UserWithId | undefined {
+        const userIndex = this.users.findIndex(user => user.id === userId);
+        if (userIndex === -1) {
+            return undefined;
+        }
+        this.users[userIndex] = {id: userId, ...body};
+        return this.users[userIndex];
+    }
 }
 
 export const db = new Database();

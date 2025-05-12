@@ -12,7 +12,7 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
             res.writeHead(200);
             res.end(JSON.stringify(allUsers));
           } else {
-            const userId = path.split('users')[1].replace("/", "");
+            const userId = getUserId(path);
             const user = db.getUserById(userId);
             if (user) {
               res.writeHead(200);
@@ -39,10 +39,36 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
           }
           break;
         }
+        case "PUT": {
+          const userId = getUserId(path);
+          const userBody = await getReqBody<User>(req);
+          if (isUser(userBody)) {
+            const updatedUser = db.updateUser(userId, userBody);
+            if (updatedUser) {
+              res.writeHead(200);
+              res.end(JSON.stringify(updatedUser));
+            } else {
+              res.writeHead(404);
+              res.end(JSON.stringify({
+                message: `user ${userId} not found`
+              }));
+            }
+          } else {
+            res.writeHead(400);
+            res.end(JSON.stringify({
+              message: "user body is invalid"
+            }));
+          }
+        }
+        break;
         default:
           res.writeHead(200);
           res.end(JSON.stringify({
             message: `unsupported method ${req.method}`
           }));
       }
+}
+
+const getUserId = (path:string) => {
+  return path.split('users')[1].replace("/", "");
 }
