@@ -1,9 +1,14 @@
 import http from "node:http";
+import url from "node:url";
 
 const port = 4000;
 
 const server = http.createServer(async (req, res) => {
-  console.log(`received request via ${req.method} method`);
+  const parsedUrl = url.parse(req.url ?? "", false);
+  const path = parsedUrl.pathname;
+
+  console.log(`received request: ${req.method} ${path}`)
+
   res.writeHead(200);
   res.end(JSON.stringify({
     status: 200,
