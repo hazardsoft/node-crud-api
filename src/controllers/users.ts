@@ -1,4 +1,4 @@
-import {isUser} from "../validate.js";
+import {isUser, isUserId} from "../validate.js";
 import type http from "node:http";
 import {getReqBody} from "../utils.js";
 import type {User} from "../types.js";
@@ -13,6 +13,13 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
             res.end(JSON.stringify(allUsers));
           } else {
             const userId = getUserId(path);
+            if (!isUserId(userId)) {
+              res.writeHead(400);
+              res.end(JSON.stringify({
+                message: "user id is invalid"
+              }));
+              return;
+            }
             const user = db.getUserById(userId);
             if (user) {
               res.writeHead(200);
@@ -41,6 +48,13 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
         }
         case "PUT": {
           const userId = getUserId(path);
+          if (!isUserId(userId)) {
+            res.writeHead(400);
+            res.end(JSON.stringify({
+              message: "user id is invalid"
+            }));
+            return;
+          }
           const userBody = await getReqBody<User>(req);
           if (isUser(userBody)) {
             const updatedUser = db.updateUser(userId, userBody);
