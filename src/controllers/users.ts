@@ -75,6 +75,27 @@ export const handleUsers = async (path:string, req:http.IncomingMessage, res:htt
           }
         }
         break;
+        case "DELETE": {
+          const userId = getUserId(path);
+          if (!isUserId(userId)) {
+            res.writeHead(400);
+            res.end(JSON.stringify({
+              message: "user id is invalid"
+            }));
+            return;
+          }
+          const deletedUser = db.deleteUser(userId);
+          if (deletedUser) {
+            res.writeHead(204);
+            res.end();
+          } else {
+            res.writeHead(404);
+            res.end(JSON.stringify({
+              message: `user ${userId} not found`
+            }));
+          }
+        }
+        break;
         default:
           res.writeHead(200);
           res.end(JSON.stringify({

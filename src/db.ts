@@ -26,6 +26,14 @@ export class Database {
         this.users[userIndex] = {id: userId, ...body};
         return this.users[userIndex];
     }
+
+    deleteUser(id:UserId): UserWithId | undefined {
+      const userIndex = this.users.findIndex(user => user.id === id);
+      if (userIndex === -1) {
+        return undefined;
+      }
+      return this.users.splice(userIndex, 1)[0];
+    }
 }
 
 export const db = new Database();
